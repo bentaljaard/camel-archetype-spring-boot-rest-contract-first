@@ -30,6 +30,9 @@ public class CamelConfiguration extends RouteBuilder {
   
   @Autowired
   private ApiProperties apiProperties;
+
+  @Autowired
+  private CamelContext camelContext;
   
   @Override
   public void configure() throws Exception {
@@ -49,18 +52,18 @@ public class CamelConfiguration extends RouteBuilder {
             .apiProperty("api.title", "__API_NAME__")
             .apiProperty("api.version", "__API_VERSION__");
 
-//    rest(apiPath)
-//            .description("TroubleTicket API")
-//            .consumes("application/json")
-//            .produces("application/json")
-//
-//            .post("/troubleTicket")
-//
-//            .description("Create TroubleTicket")
-//            .type(TroubleTicket.class)
-//            .param().name("body").type(RestParamType.body).description("The ticket to update").endParam()
-//            .responseMessage().code(202).endResponseMessage()
-//            .route().routeId("troubleTicketCreate")
-//            .to("bean:troubleTicketService?method=troubleTicketCreate");
+    //Import generated routes
+    camelContext.addRoutes(new APITroubleTicket());
+
+
+    onException(NotImplementedException.class)
+            .handled(true)
+            .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(501))
+            .setHeader(Exchange.CONTENT_TYPE, constant("test/plain"))
+            .setBody().constant("Method not implemented yet ");
+
+
+    //Implement direct routes here
+
   }
 }
