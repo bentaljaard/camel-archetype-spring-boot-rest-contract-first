@@ -13,12 +13,16 @@
  */
 package ${package};
 
-import org.apache.camel.LoggingLevel;
+import org.apache.camel.CamelContext;
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.model.rest.RestBindingMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.apache.commons.lang3.NotImplementedException;
+import __API_PACKAGE__.__API_CLASS__;
 //import org.springframework.context.annotation.Import;
 
 
@@ -47,13 +51,13 @@ public class CamelConfiguration extends RouteBuilder {
             .dataFormatProperty("json.out.include", "NON_NULL")
             .dataFormatProperty("json.out.disableFeatures", "WRITE_DATES_AS_TIMESTAMPS")
             .dataFormatProperty("json.out.moduleClassNames", "com.fasterxml.jackson.datatype.jsr310.JavaTimeModule")
-            .contextPath(apiProperties.getBasePath)
+            .contextPath(apiProperties.getBasePath())
             .apiContextPath("/api-docs")
             .apiProperty("api.title", "__API_NAME__")
             .apiProperty("api.version", "__API_VERSION__");
 
     //Import generated routes
-    camelContext.addRoutes(new APITroubleTicket());
+    camelContext.addRoutes(new __API_CLASS__());
 
 
     onException(NotImplementedException.class)
