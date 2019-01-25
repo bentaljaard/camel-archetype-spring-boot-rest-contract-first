@@ -62,6 +62,7 @@ def quoteYamlString(def yamlString) {
   return (yamlString) ? "'${yamlString.replaceAll('\'', '\'\'')}'" : null
 }
 
+def zipkin_url = request.properties['zipkin-url']
 def applicationYmlFile = Paths.get(request.outputDirectory, request.artifactId, 'src/main/resources', 'application.yml').toFile()
 def applicationYamlText = applicationYmlFile.text
 applicationYamlText = applicationYamlText.replaceAll('__CAMEL_SPRINGBOOT_NAME__', request.artifactId.split('-').collect() { it.capitalize() }.join(''))
@@ -72,6 +73,7 @@ applicationYamlText = applicationYamlText.replaceAll('__API_TERMS_OF_SERVICE_URL
 applicationYamlText = applicationYamlText.replaceAll('__API_VERSION__', quoteYamlString(apiVersion)?:'')
 applicationYamlText = applicationYamlText.replaceAll('__API_DESCRIPTION__', quoteYamlString(apiDescription)?:'')
 applicationYamlText = applicationYamlText.replaceAll('__API_CONTACT__', quoteYamlString(apiContact)?:'')
+applicationYamlText = applicationYamlText.replaceAll('__ZIPKIN_ENDPOINT__', zipkin_url)
 applicationYmlFile.setText(applicationYamlText, encoding)
 
 
@@ -96,3 +98,15 @@ camelConfigurationJavaText = camelConfigurationJavaText.replaceAll('__API_CLASS_
 camelConfigurationJavaText = camelConfigurationJavaText.replaceAll('__API_VERSION__', apiVersion)
 
 camelConfigurationJavaFile.setText(camelConfigurationJavaText, encoding)
+
+dir = new File(new File(request.outputDirectory), request.artifactId)
+
+def run(String cmd) {
+    def process = cmd.execute(null, dir)
+    process.waitForProcessOutput((Appendable)System.out, System.err)
+    if (process.exitValue() != 0) {
+        throw new Exception("Command '$cmd' exited with code: ${process.exitValue()}")
+    }
+}
+
+run("mvn compile")

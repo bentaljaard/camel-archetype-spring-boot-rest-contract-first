@@ -17,6 +17,9 @@ spring:
 camel:
   springboot:
     name: __CAMEL_SPRINGBOOT_NAME__
+  zipkin:
+    serviceName: __CAMEL_SPRINGBOOT_NAME__
+    endpoint: __ZIPKIN_ENDPOINT__
 
 # Logging
 logging:

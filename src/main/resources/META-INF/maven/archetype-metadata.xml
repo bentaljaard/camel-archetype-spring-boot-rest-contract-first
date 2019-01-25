@@ -15,18 +15,21 @@
       <defaultValue>2.3.1</defaultValue>
     </requiredProperty>
     <requiredProperty key="camel-version">
-      <defaultValue>2.21.0</defaultValue>
+      <defaultValue>2.22.0</defaultValue>
     </requiredProperty>
     <requiredProperty key="cxf-version">
       <defaultValue>3.2.4</defaultValue>
     </requiredProperty>
     <requiredProperty key="spring-boot-version">
-      <defaultValue>1.5.10.RELEASE</defaultValue>
+      <defaultValue>2.1.0.RELEASE</defaultValue>
     </requiredProperty>
     <requiredProperty key="swagger-jaxrs-version">
       <defaultValue>1.5.18</defaultValue>
     </requiredProperty>
     <requiredProperty key="swagger-api-url"/>
+    <requiredProperty key="zipkin-url">
+      <defaultValue>http://test.com:9411</defaultValue>
+    </requiredProperty>
   </requiredProperties>
   
   <fileSets>

@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.apache.commons.lang3.NotImplementedException;
-import __API_PACKAGE__.__API_CLASS__;
+import __API_PACKAGE__.api.__API_CLASS__;
 //import org.springframework.context.annotation.Import;
 
 
